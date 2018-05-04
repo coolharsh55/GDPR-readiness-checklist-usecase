@@ -26,7 +26,10 @@
     <body>
         <div class="container">
             <h1>Queryable Provenance Metadata For GDPR Compliance</h1>
-        <p>GDPR Readiness-Checklist SPARQL demo</p>
+        <p><label>GDPR Readiness-Checklist SPARQL demo</label><br/>
+            Researcher: Harshvardhan J. Pandit<br/>
+            PI/Supervisor: Dave Lewis, Declan O'Sullivan<br/>
+            Contact: harshvardhan.pandit@adaptcentre.ie</p>
         <p>
 Information associated with regulatory compliance is often siloed as legal documentation that is not suitable for querying or reuse. Utilising open standards and technologies to represent and query this information can facilitate interoperability between stakeholders and assist in the task of maintaining as well as demonstrating compliance. We show how semantic web technologies can assist in representation and querying of compliance information related to the General Data Protection Regulation (GDPR), an European law governing the use of consent and personal data. We focus on the subset of obligations related to the use of consent and personal data, and represent the associated metadata using the <a href="http://openscience.adaptcentre.ie/projects/CDMM/GDPRov/">GDPRov</a> ontology and <a href="http://openscience.adaptcentre.ie/projects/GDPRtEXT/">GDPRtEXT</a> resource. This is a proof-of-concept demonstration where information is queried to automatically populate the <a href="http://gdprandyou.ie/wp-content/uploads/2018/01/GDPR-Checklist-Templates-for-SMEs-Downloadable-1.docx">GDPR-readiness checklist</a> published by Ireland’s Data Protection Commissioner (<a href="http://gdprandyou.ie/">gdprandyou.ie</a>).
 </p>
@@ -35,7 +38,13 @@ Information associated with regulatory compliance is often siloed as legal docum
 <li>The queries are executed on page load and retrieve the results directly from the SPARQL endpoint / triple-store.</li>
 <li>Therefore, depending on your connection, the page may load slower than intended.</li>
 <li>The analysis notes describing the creation of this resource and queries can be accessed <a href="notes.html">HERE</a></li>
+<li>The data graph for use-case can be downloaded <a href="data.rdf">HERE</a></li>
+<li>This page and all associated data, including queries and results, is available for reuse under the <a href="https://creativecommons.org/licenses/by/4.0/legalcode">CC-by-4.0 <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" style="max-width:100px;"></a> license</li>
 </ul>
+
+<p><label>Acknowledgements:</label> This work is supported by the <a href="https://www.adaptcentre.ie/">ADAPT Centre for Digital Content Technology</a>
+which is funded under the SFI Research Centres Programme (Grant 13/RC/2106)
+and is co-funded under the European Regional Development Fund.</p>
 
 <label>prefixes</label>
 <pre data-lang="sparql">

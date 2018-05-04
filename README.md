@@ -1,5 +1,7 @@
 # GDPR-readiness-checklist-usecase
 
+[Available Online](http://openscience.adaptcentre.ie/GDPR-checklist-demo/demo/)
+
 The Data Protection Commissioner of Ireland (DPC Ireland) has put forth 
 a GDPR readiness checklist (GDPR-RC) [1] that consists of a spreadsheet meant
 to be filled to assess and help in GDPR readiness. This research aims to
