@@ -1,0 +1,6 @@
+SELECT DISTINCT ?data ?format where {
+  ?process a gdprov:HandleRightOfDataPortability .
+  ?step gdprov:isPartOfProcess ?process .
+  ?step gdprov:generatesData ?data .
+  ?data dct:format ?format .
+} ORDER BY ?data

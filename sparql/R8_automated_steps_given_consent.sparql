@@ -1,0 +1,5 @@
+SELECT DISTINCT ?step ?process where {
+  ?step a gdprov:AutomatedStep .
+  ?step gdprov:isPartOfProcess ?process .
+  ?process gdprov:hasLegalBasis gdprtext:GivenConsent .
+} ORDER BY ?step ?process

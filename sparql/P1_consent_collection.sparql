@@ -1,0 +1,9 @@
+SELECT DISTINCT ?step ?terms ?template ?givenConsent {
+  ?step a gdprov:ConsentAcquisitionStep .
+  ?template a gdprov:ConsentAgreementTemplate .
+  ?terms a gdprov:TermsAndConditions .
+  ?givenConsent a gdprov:ConsentAgreement .
+  ?step gdprov:usesConsentAgreementTemplate ?template .
+  ?step gdprov:usesTermsAndConditions ?terms .
+  ?step gdprov:generatesConsentAgreement ?givenConsent .
+} ORDER BY ?step

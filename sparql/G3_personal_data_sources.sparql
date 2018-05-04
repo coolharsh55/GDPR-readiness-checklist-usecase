@@ -1,0 +1,9 @@
+SELECT DISTINCT ?data ?step ?agent ?agent_type where {
+  ?data a ?data_type .
+  ?data_type rdfs:subClassOf gdprov:PersonalData .
+  ?step a gdprov:DataCollectionStep .
+  ?step gdprov:collectsData ?data .
+  ?step gdprov:collectsDataFromAgent ?agent .
+  ?agent a ?agent_type .
+  FILTER(regex(str(?agent_type), "http://example.com/ontology/shoppingapp#")) .
+} ORDER BY ?data ?step ?agent

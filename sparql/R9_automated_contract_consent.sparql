@@ -1,0 +1,6 @@
+SELECT DISTINCT ?step ?process ?legal where {
+  ?step a gdprov:AutomatedStep .
+  ?step gdprov:isPartOfProcess ?process .
+  ?process gdprov:hasLegalBasis ?legal .
+  FILTER(?legal IN (gdprtext:ContractWithDataSubject, gdprtext:GivenConsent) ) .
+} ORDER BY ?step

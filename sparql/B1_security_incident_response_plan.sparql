@@ -1,0 +1,5 @@
+SELECT DISTINCT ?process ?step where {
+  ?process a ?BreachProcess .
+  FILTER(?BreachProcess IN (gdprov:HandleDataBreachProcess, gdprov:ReportDataBreach) ) .
+  ?step gdprov:isPartOfProcess ?process .
+} ORDER BY ?process

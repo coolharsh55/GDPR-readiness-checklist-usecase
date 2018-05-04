@@ -1,0 +1,5 @@
+SELECT DISTINCT ?category where {
+  ?category rdfs:subClassOf gdprov:DataSubject .
+  FILTER(regex(str(?category), "http://example.com/ontology/shoppingapp#")) .
+} ORDER BY ?category
+

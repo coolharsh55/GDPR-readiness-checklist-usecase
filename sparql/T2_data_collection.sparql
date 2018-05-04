@@ -1,0 +1,4 @@
+SELECT DISTINCT ?step ?data where {
+  ?step a gdprov:DataCollectionStep .
+  ?step gdprov:collectsData ?data .
+} ORDER BY ?step

@@ -1,0 +1,9 @@
+SELECT DISTINCT ?process where {
+  {
+    ?process a gdprov:HandleRightOfErasure .
+  }
+  UNION
+  {
+    ?process a gdprov:HandleRightToRectification .
+  }
+} ORDER BY ?process

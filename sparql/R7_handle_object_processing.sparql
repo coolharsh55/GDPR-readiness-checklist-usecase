@@ -1,0 +1,3 @@
+SELECT DISTINCT ?process where {
+  ?process a gdprov:HandleRightToObjectProcessing .
+} ORDER BY ?process

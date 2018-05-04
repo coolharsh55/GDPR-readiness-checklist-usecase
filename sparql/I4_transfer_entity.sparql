@@ -1,0 +1,9 @@
+
+SELECT DISTINCT ?step ?entity ?EntityType {
+  ?step a gdprov:DataTransferStep .
+  OPTIONAL {
+    ?step ?action ?entity .
+    ?entity a ?EntityType .
+    ?EntityType rdfs:subClassOf* prov:Agent .
+  }
+} ORDER BY ?step ?entity

@@ -1,0 +1,18 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gdprov: <http://purl.org/adaptcentre/openscience/ontologies/gdprov#>
+PREFIX gdprtext: <https://purl.org/adaptcentre/openscience/ontologies/GDPRtEXT#>
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX this: <http://example.com/ontology/shoppingapp#>
+
+
+select DISTINCT ?data_type ?process where {
+  ?data a ?data_type .
+  ?data_type rdfs:subClassOf+ gdprov:PersonalData .
+  ?step a ?step_type .
+  ?step_type rdfs:subClassOf* gdprov:DataStep .
+  ?step gdprov:usesData ?data . 
+  ?step gdprov:isPartOfProcess ?process .
+} ORDER BY ?data_type ?process

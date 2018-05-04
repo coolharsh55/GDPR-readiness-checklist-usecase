@@ -1,0 +1,5 @@
+SELECT DISTINCT ?agent ?thirdparty ?step  where {
+  ?step a gdprov:DataCollectionStep .
+  ?step gdprov:collectsDataFromAgent ?agent .
+  BIND(EXISTS { ?agent a gdprov:ThirdParty } as ?thirdparty ) .
+} ORDER BY ?agent ?step

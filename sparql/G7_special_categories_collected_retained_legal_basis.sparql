@@ -1,0 +1,16 @@
+SELECT DISTINCT ?data ?SensitiveDataType ?collectionStep ?retained ?legal where {
+  ?SensitiveDataType rdfs:subClassOf gdprov:SensitiveData .
+  ?data a ?SensitiveDataType . 
+  ?collectionStep a gdprov:DataCollectionStep .
+  ?collectionStep gdprov:collectsData ?data .
+  OPTIONAL {
+    ?collectionStep gdprov:hasLegalBasis ?legal .
+  }
+  BIND( EXISTS {
+    ?storageStep a gdprov:DataStorageStep .
+    ?storageStep gdprov:usesData ?data .
+  } as ?retained ) .
+  OPTIONAL {
+    ?collectionStep gdprov:isPartOfProcess ?process .
+  }
+} ORDER BY ?SensitiveDataType

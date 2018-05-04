@@ -1,0 +1,6 @@
+ASK {
+  ?step a gdprov:DataTransferStep .
+  ?step ?_ ?data .
+  ?data a ?DataType .
+  ?DataType rdfs:subClassOf gdprov:SensitiveData .
+}

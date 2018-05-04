@@ -1,0 +1,11 @@
+SELECT DISTINCT ?step ?process ?action ?item where {
+  ?step a gdprov:ConsentWithdrawalStep .
+  OPTIONAL {
+    ?process a gdprov:Process .
+    ?step gdprov:isPartOfProcess ?process .
+  }
+  OPTIONAL {
+    ?step ?action ?item .
+  }
+  FILTER(regex(str(?action), "http://purl.org/adaptcentre/openscience/ontologies/gdprov#")) .
+} ORDER BY ?step ?action

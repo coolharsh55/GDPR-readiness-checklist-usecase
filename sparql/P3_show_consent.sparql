@@ -1,0 +1,8 @@
+
+SELECT DISTINCT ?step ?action ?consent where {
+  ?consent a gdprov:ConsentAgreement .
+  ?StepType rdfs:subClassOf gdprov:ConsentStep .
+  ?step a ?StepType .
+  ?step ?action ?consent.
+  FILTER(regex(str(?action), "http://purl.org/adaptcentre/openscience/ontologies/gdprov#")) .
+} ORDER BY ?step ?consent

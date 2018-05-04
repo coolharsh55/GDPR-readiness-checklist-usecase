@@ -1,0 +1,785 @@
+@prefix : <http://example.com/ontology/shoppingapp#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix this: <http://example.com/ontology/shoppingapp#> .
+@prefix gdprov: <http://purl.org/adaptcentre/openscience/ontologies/gdprov#> .
+@prefix p-plan: <http://purl.org/net/p-plan#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix gdprtext: <http://purl.org/adaptcentre/openscience/ontologies/GDPRtEXT#> .
+@base <http://example.com/ontology/shoppingapp> .
+
+<http://example.com/ontology/shoppingapp> rdf:type owl:Ontology ;
+                                           owl:imports p-plan: ,
+                                                       <https://openscience.adaptcentre.ie/ontologies/GDPRtEXT/v/gdpr_v0.5.owl> ,
+                                                       <http://www.w3.org/ns/prov-o-20130430> ,
+                                                       <https://openscience.adaptcentre.ie/ontologies/gdprov/v/gdprov_v0.6.owl> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://example.com/ontology/shoppingapp#location
+this:location rdf:type owl:AnnotationProperty ;
+              rdfs:comment "Specifies the location of something referenced by it" ;
+              rdfs:label "location" .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#hasLegalBasis
+gdprov:hasLegalBasis rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#refersToProcess
+gdprov:refersToProcess rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#sharesData
+gdprov:sharesData rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#sharesDataWith
+gdprov:sharesDataWith rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#transfersDataToRegion
+gdprov:transfersDataToRegion rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/format
+dcterms:format rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#archivesConsentAs
+gdprov:archivesConsentAs rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#collectsConsentFromAgent
+gdprov:collectsConsentFromAgent rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#collectsData
+gdprov:collectsData rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#collectsDataFromAgent
+gdprov:collectsDataFromAgent rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#generatesAnonymisedData
+gdprov:generatesAnonymisedData rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#generatesConsentAgreement
+gdprov:generatesConsentAgreement rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#generatesData
+gdprov:generatesData rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#invalidatesData
+gdprov:invalidatesData rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#involvesAgent
+gdprov:involvesAgent rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#isPartOfProcess
+gdprov:isPartOfProcess rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#usesConsentAgreement
+gdprov:usesConsentAgreement rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#usesConsentAgreementTemplate
+gdprov:usesConsentAgreementTemplate rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#usesData
+gdprov:usesData rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#usesTermsAndConditions
+gdprov:usesTermsAndConditions rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/net/p-plan#isPrecededBy
+p-plan:isPrecededBy rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.com/ontology/shoppingapp#BankingInfo
+this:BankingInfo rdf:type owl:Class ;
+                 rdfs:subClassOf gdprov:SensitiveData ;
+                 rdfs:comment "Information about a Customer's Bank/Payment/Account/Transaction"@en ;
+                 rdfs:label "Banking Info"^^rdfs:Literal .
+
+
+###  http://example.com/ontology/shoppingapp#CustomerInfo
+this:CustomerInfo rdf:type owl:Class ;
+                  rdfs:subClassOf gdprov:PersonalData ;
+                  rdfs:comment "Information about the Customer (A User who has ordered products)"@en ;
+                  rdfs:label "Customer Info"^^rdfs:Literal .
+
+
+###  http://example.com/ontology/shoppingapp#ServiceUser
+this:ServiceUser rdf:type owl:Class ;
+                 rdfs:subClassOf gdprov:DataSubject ;
+                 rdfs:comment "A User of the Services provided" ;
+                 rdfs:label "Service User" .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#AnonymisedData
+gdprov:AnonymisedData rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#AutomatedStep
+gdprov:AutomatedStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#ConsentAcquisitionStep
+gdprov:ConsentAcquisitionStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#ConsentAgreement
+gdprov:ConsentAgreement rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#ConsentAgreementTemplate
+gdprov:ConsentAgreementTemplate rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#ConsentArchivalStep
+gdprov:ConsentArchivalStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#ConsentWithdrawalStep
+gdprov:ConsentWithdrawalStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#Data
+gdprov:Data rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#DataAnonymisationStep
+gdprov:DataAnonymisationStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#DataCollectionStep
+gdprov:DataCollectionStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#DataDeletionStep
+gdprov:DataDeletionStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#DataStorageStep
+gdprov:DataStorageStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#DataSubject
+gdprov:DataSubject rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#DataTransferStep
+gdprov:DataTransferStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#DataUsageStep
+gdprov:DataUsageStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#HandleDataBreachProcess
+gdprov:HandleDataBreachProcess rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#HandleRightOfDataPortability
+gdprov:HandleRightOfDataPortability rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#HandleRightOfErasure
+gdprov:HandleRightOfErasure rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#HandleRightToObjectProcessing
+gdprov:HandleRightToObjectProcessing rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#HandleRightToRectification
+gdprov:HandleRightToRectification rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#HandleSAR
+gdprov:HandleSAR rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#ImpactAssessment
+gdprov:ImpactAssessment rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#Marketing
+gdprov:Marketing rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#NotifyDPA
+gdprov:NotifyDPA rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#NotifyDataSubject
+gdprov:NotifyDataSubject rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#PersonalData
+gdprov:PersonalData rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#Process
+gdprov:Process rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#ProvideCopyOfPersonalData
+gdprov:ProvideCopyOfPersonalData rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#RectifyData
+gdprov:RectifyData rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#ReportDataBreach
+gdprov:ReportDataBreach rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#SensitiveData
+gdprov:SensitiveData rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#TermsAndConditions
+gdprov:TermsAndConditions rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#UserInputStep
+gdprov:UserInputStep rdf:type owl:Class .
+
+
+###  http://purl.org/adaptcentre/openscience/ontologies/gdprov#UserOutputStep
+gdprov:UserOutputStep rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://example.com/ontology/shoppingapp#AdGenProcess
+this:AdGenProcess rdf:type owl:NamedIndividual ,
+                           gdprov:Process ;
+                  gdprov:hasLegalBasis gdprtext:GivenConsent ;
+                  rdfs:comment "A process to generate Ads to be shown along with the Product"@en ;
+                  rdfs:label "Ads Generation Process"@en .
+
+
+###  http://example.com/ontology/shoppingapp#Ads
+this:Ads rdf:type owl:NamedIndividual ,
+                  gdprov:Data ;
+         rdfs:comment "Ads shown along with a product"@en ;
+         rdfs:label "Ads"@en .
+
+
+###  http://example.com/ontology/shoppingapp#AdsProvider
+this:AdsProvider rdf:type owl:NamedIndividual ,
+                          gdprov:Processor ;
+                 rdfs:comment "Third Party that provides Ads based on given information"@en ;
+                 rdfs:label "Ads Provider"@en .
+
+
+###  http://example.com/ontology/shoppingapp#AnonymiseUserDataForRemoval
+this:AnonymiseUserDataForRemoval rdf:type owl:NamedIndividual ,
+                                          gdprov:DataAnonymisationStep ;
+                                 gdprov:generatesAnonymisedData this:AnonymisedUserProfile ;
+                                 gdprov:isPartOfProcess this:RemoveUserAccountProcess ;
+                                 gdprov:usesData this:CustomerAddress ,
+                                                 this:CustomerBankAC ,
+                                                 this:CustomerCardDetails ,
+                                                 this:CustomerContactNo ,
+                                                 this:CustomerEmail ,
+                                                 this:CustomerName ;
+                                 p-plan:isPrecededBy this:ArchiveConsentForRemoval ;
+                                 rdfs:comment "A user's personal data that has been anonymised before deletion"@en ;
+                                 rdfs:label "Anonymise user data (for removal)"@en .
+
+
+###  http://example.com/ontology/shoppingapp#AnonymisedUserProfile
+this:AnonymisedUserProfile rdf:type owl:NamedIndividual ,
+                                    gdprov:AnonymisedData ;
+                           rdfs:comment "A User Profile where all personal information has been either removed or anonymised"@en ;
+                           rdfs:label "User Profile (Anonymised)"@en .
+
+
+###  http://example.com/ontology/shoppingapp#ArchiveConsentForRemoval
+this:ArchiveConsentForRemoval rdf:type owl:NamedIndividual ,
+                                       gdprov:ConsentArchivalStep ;
+                              gdprov:archivesConsentAs this:ArchivedConsent ;
+                              gdprov:isPartOfProcess this:RemoveUserAccountProcess ;
+                              gdprov:usesConsentAgreement this:NewUserConsent ;
+                              rdfs:comment "Archived copy of given consent preserved (before deletion) for compliance purposes"@en ;
+                              rdfs:label "Archive consent (for removal)"@en .
+
+
+###  http://example.com/ontology/shoppingapp#ArchivedConsent
+this:ArchivedConsent rdf:type owl:NamedIndividual ,
+                              gdprov:ConsentAgreement ;
+                     rdfs:comment "Archived copy of consent"@en ;
+                     rdfs:label "Consent (Archived)"@en .
+
+
+###  http://example.com/ontology/shoppingapp#BackupServers
+this:BackupServers rdf:type owl:NamedIndividual ,
+                            owl:Thing ;
+                   this:location "Ireland" ;
+                   rdfs:comment "Backup Servers hosting data and situated in Ireland"@en ;
+                   rdfs:label "Backup Servers"@en .
+
+
+###  http://example.com/ontology/shoppingapp#ConsentWithdrawalStep
+this:ConsentWithdrawalStep rdf:type owl:NamedIndividual ,
+                                    gdprov:ConsentWithdrawalStep ;
+                           gdprov:generatesConsentAgreement this:ModifiedConsent ;
+                           gdprov:usesConsentAgreement this:StoredNewUserConsent ;
+                           rdfs:comment "This step withdraws consent (User's Given Consent)"@en ;
+                           rdfs:label "Consent Withdrawal Step"@en .
+
+
+###  http://example.com/ontology/shoppingapp#CopyOfPersonalData
+this:CopyOfPersonalData rdf:type owl:NamedIndividual ,
+                                 gdprov:PersonalData ;
+                        dcterms:format <https://www.iana.org/assignments/media-types/application/json> ;
+                        rdfs:comment "This is a copy of (all of) the user's personal data."@en ;
+                        rdfs:label "Personal Data (copy)"@en .
+
+
+###  http://example.com/ontology/shoppingapp#CustomerAddress
+this:CustomerAddress rdf:type owl:NamedIndividual ,
+                              this:CustomerInfo ;
+                     rdfs:comment "The address of the customer"@en ;
+                     rdfs:label "Customer Address"@en .
+
+
+###  http://example.com/ontology/shoppingapp#CustomerBankAC
+this:CustomerBankAC rdf:type owl:NamedIndividual ,
+                             this:BankingInfo ;
+                    rdfs:comment "The Bank Account or Transaction details of Customer"@en ;
+                    rdfs:label "Customer Bank Account"@en .
+
+
+###  http://example.com/ontology/shoppingapp#CustomerCardDetails
+this:CustomerCardDetails rdf:type owl:NamedIndividual ,
+                                  this:BankingInfo ;
+                         rdfs:comment "Payment information such as Card details for Customer"@en ;
+                         rdfs:label "Customer Card Details"@en .
+
+
+###  http://example.com/ontology/shoppingapp#CustomerContactNo
+this:CustomerContactNo rdf:type owl:NamedIndividual ,
+                                this:CustomerInfo ;
+                       rdfs:comment "Customer's contact information, such as telephone number"@en ;
+                       rdfs:label "Customer Contact Number"@en .
+
+
+###  http://example.com/ontology/shoppingapp#CustomerEmail
+this:CustomerEmail rdf:type owl:NamedIndividual ,
+                            this:CustomerInfo ;
+                   rdfs:comment "Customer's contact information, such as email"@en ;
+                   rdfs:label "Customer Email"@en .
+
+
+###  http://example.com/ontology/shoppingapp#CustomerName
+this:CustomerName rdf:type owl:NamedIndividual ,
+                           this:CustomerInfo ;
+                  rdfs:comment "Name of Customer"@en ;
+                  rdfs:label "Customer Name"@en .
+
+
+###  http://example.com/ontology/shoppingapp#DeleteUserAccountData
+this:DeleteUserAccountData rdf:type owl:NamedIndividual ,
+                                    gdprov:DataDeletionStep ;
+                           gdprov:invalidatesData this:CustomerAddress ,
+                                                  this:CustomerBankAC ,
+                                                  this:CustomerCardDetails ,
+                                                  this:CustomerContactNo ,
+                                                  this:CustomerEmail ,
+                                                  this:CustomerName ;
+                           gdprov:isPartOfProcess this:RemoveUserAccountProcess ;
+                           p-plan:isPrecededBy this:AnonymiseUserDataForRemoval ;
+                           rdfs:comment "This step deletes user (customer records) data"@en ;
+                           rdfs:label "Delete User Account Data"@en .
+
+
+###  http://example.com/ontology/shoppingapp#EraseSelectedData
+this:EraseSelectedData rdf:type owl:NamedIndividual ,
+                                gdprov:DataDeletionStep ;
+                       gdprov:isPartOfProcess this:HandleRightOfErasure ;
+                       rdfs:comment "This step deletes (partially) some of the user's data. It allows the user to select which data should be deleted."@en ;
+                       rdfs:label "Erase (selected) Data"@en .
+
+
+###  http://example.com/ontology/shoppingapp#GatherInfoForImpactAssessment
+this:GatherInfoForImpactAssessment rdf:type owl:NamedIndividual ,
+                                            gdprov:AutomatedStep ;
+                                   gdprov:isPartOfProcess this:ImpactAssessment ;
+                                   gdprov:refersToProcess this:AdGenProcess ,
+                                                          this:NewUserSignUpProcess ,
+                                                          this:OrderProcess ,
+                                                          this:RemoveUserAccountProcess ;
+                                   rdfs:comment "This step gathers information required for an Impact Assessment within the framework of the system model. It is a pre-cursor for the Impact Assessment step."@en ;
+                                   rdfs:label "Gather required information for Impact Assessment"@en .
+
+
+###  http://example.com/ontology/shoppingapp#GenerateImpactAssessmentReport
+this:GenerateImpactAssessmentReport rdf:type owl:NamedIndividual ,
+                                             p-plan:Step ;
+                                    gdprov:generatesData this:ImpactAssessmentReport ;
+                                    gdprov:isPartOfProcess this:ImpactAssessment ;
+                                    p-plan:isPrecededBy this:GatherInfoForImpactAssessment ;
+                                    rdfs:comment "This step generates the Impact Assessment report"@en ;
+                                    rdfs:label "Generate Impact Assessment Report"@en .
+
+
+###  http://example.com/ontology/shoppingapp#GetNewUserConsent
+this:GetNewUserConsent rdf:type owl:NamedIndividual ,
+                                gdprov:ConsentAcquisitionStep ,
+                                gdprov:UserInputStep ;
+                       gdprov:collectsConsentFromAgent this:User ;
+                       gdprov:generatesConsentAgreement this:NewUserConsent ;
+                       gdprov:isPartOfProcess this:NewUserSignUpProcess ;
+                       gdprov:usesConsentAgreementTemplate this:NewUserSignUpForm ;
+                       gdprov:usesTermsAndConditions this:TermsAndConditions ;
+                       gdprov:hasLegalBasis gdprtext:LegalObligation ;
+                       rdfs:comment "This step is responsible for retrieving the (new) user's consent."@en ;
+                       rdfs:label "Get Consent for New User"@en .
+
+
+###  http://example.com/ontology/shoppingapp#GetNewUserDetails
+this:GetNewUserDetails rdf:type owl:NamedIndividual ,
+                                gdprov:DataCollectionStep ,
+                                gdprov:UserInputStep ;
+                       gdprov:collectsData this:CustomerAddress ,
+                                           this:CustomerContactNo ,
+                                           this:CustomerEmail ,
+                                           this:CustomerName ;
+                       gdprov:collectsDataFromAgent this:User ;
+                       gdprov:isPartOfProcess this:NewUserSignUpProcess ;
+                       p-plan:isPrecededBy this:GetNewUserConsent ;
+                       gdprov:hasLegalBasis gdprtext:LegitimateInterest ;
+                       rdfs:comment "This step is responsible for gathering the (new) user's details required for operation of services"@en ;
+                       rdfs:label "Get Details for New User"@en .
+
+
+###  http://example.com/ontology/shoppingapp#HandleDataBreach
+this:HandleDataBreach rdf:type owl:NamedIndividual ,
+                               gdprov:HandleDataBreachProcess ;
+                      rdfs:comment "This process outlines the set of actions to be carried out in the event of a data breach"@en ;
+                      rdfs:label "Handle Data Breach"@en .
+
+
+###  http://example.com/ontology/shoppingapp#HandleRightDataPortability
+this:HandleRightDataPortability rdf:type owl:NamedIndividual ,
+                                         gdprov:HandleRightOfDataPortability ;
+                                rdfs:comment "This process is responsible for handling the Right to Data Portability"@en ;
+                                rdfs:label "Handle Right to Data Portability"@en .
+
+
+###  http://example.com/ontology/shoppingapp#HandleRightOfErasure
+this:HandleRightOfErasure rdf:type owl:NamedIndividual ,
+                                   gdprov:HandleRightOfErasure ;
+                          rdfs:comment "This process is responsible for handling the Right of Erasure"@en ;
+                          rdfs:label "Handle Right of Erasure"@en .
+
+
+###  http://example.com/ontology/shoppingapp#HandleRightToObjectProcessing
+this:HandleRightToObjectProcessing rdf:type owl:NamedIndividual ,
+                                            gdprov:HandleRightToObjectProcessing ;
+                                   rdfs:comment "This process is responsible for handling the Right to Object to Processing"@en ;
+                                   rdfs:label "Handle Right to Object to Processing"@en .
+
+
+###  http://example.com/ontology/shoppingapp#HandleRightToRectification
+this:HandleRightToRectification rdf:type owl:NamedIndividual ,
+                                         gdprov:HandleRightToRectification ;
+                                rdfs:comment "This process is responsible for handling the Right to Rectification"@en ;
+                                rdfs:label "Handle Right to Rectification"@en .
+
+
+###  http://example.com/ontology/shoppingapp#HandleSAR
+this:HandleSAR rdf:type owl:NamedIndividual ,
+                        gdprov:HandleSAR ;
+               rdfs:comment ""@en ;
+               rdfs:label "Handle Subject Access Requests"@en .
+
+
+###  http://example.com/ontology/shoppingapp#ImpactAssessment
+this:ImpactAssessment rdf:type owl:NamedIndividual ,
+                               gdprov:ImpactAssessment ;
+                      rdfs:comment ""@en ;
+                      rdfs:label "Impact Assessment"@en .
+
+
+###  http://example.com/ontology/shoppingapp#ImpactAssessmentReport
+this:ImpactAssessmentReport rdf:type owl:NamedIndividual ,
+                                     gdprov:Data ;
+                            rdfs:comment ""@en ;
+                            rdfs:label "Impact Assessment Report"@en .
+
+
+###  http://example.com/ontology/shoppingapp#Invoice
+this:Invoice rdf:type owl:NamedIndividual ,
+                      gdprov:Data ;
+             rdfs:comment ""@en ;
+             rdfs:label "Invoice (Order)"@en .
+
+
+###  http://example.com/ontology/shoppingapp#MarketingProcess
+this:MarketingProcess rdf:type owl:NamedIndividual ,
+                               gdprov:Marketing ;
+                      rdfs:comment ""@en ;
+                      rdfs:label "Marketing"@en .
+
+
+###  http://example.com/ontology/shoppingapp#ModifiedConsent
+this:ModifiedConsent rdf:type owl:NamedIndividual ,
+                              gdprov:ConsentAgreement ;
+                     rdfs:comment ""@en ;
+                     rdfs:label "Consent (modified)"@en .
+
+
+###  http://example.com/ontology/shoppingapp#NewUserConsent
+this:NewUserConsent rdf:type owl:NamedIndividual ,
+                             gdprov:ConsentAgreement ;
+                    rdfs:comment ""@en ;
+                    rdfs:label "Consent from New User"@en .
+
+
+###  http://example.com/ontology/shoppingapp#NewUserSignUpForm
+this:NewUserSignUpForm rdf:type owl:NamedIndividual ,
+                                gdprov:ConsentAgreementTemplate ;
+                       rdfs:comment ""@en ;
+                       rdfs:label "Sign up form for New Users"@en .
+
+
+###  http://example.com/ontology/shoppingapp#NewUserSignUpProcess
+this:NewUserSignUpProcess rdf:type owl:NamedIndividual ,
+                                   gdprov:Process ;
+                          rdfs:comment ""@en ;
+                          rdfs:label "Sign up process for New Users"@en .
+
+
+###  http://example.com/ontology/shoppingapp#NotifyDataBreachToDataSubjects
+this:NotifyDataBreachToDataSubjects rdf:type owl:NamedIndividual ,
+                                             gdprov:NotifyDataSubject ;
+                                    gdprov:isPartOfProcess this:ReportDataBreach ;
+                                    rdfs:comment ""@en ;
+                                    rdfs:label "Notify Data Breach to Users"@en .
+
+
+###  http://example.com/ontology/shoppingapp#NotifyDataBreachToSA
+this:NotifyDataBreachToSA rdf:type owl:NamedIndividual ,
+                                   gdprov:NotifyDPA ;
+                          gdprov:isPartOfProcess this:ReportDataBreach ;
+                          rdfs:comment ""@en ;
+                          rdfs:label "Notify Data Breach to Supervisory Authorities"@en .
+
+
+###  http://example.com/ontology/shoppingapp#OrderProcess
+this:OrderProcess rdf:type owl:NamedIndividual ,
+                           gdprov:Process ;
+                  rdfs:comment ""@en ;
+                  rdfs:label "Ordering Products"@en .
+
+
+###  http://example.com/ontology/shoppingapp#OrderProduct
+this:OrderProduct rdf:type owl:NamedIndividual ,
+                           gdprov:DataCollectionStep ,
+                           gdprov:DataUsageStep ,
+                           gdprov:UserInputStep ;
+                  gdprov:collectsData this:CustomerBankAC ,
+                                      this:CustomerCardDetails ,
+                                      this:Product ;
+                  gdprov:collectsDataFromAgent this:User ;
+                  gdprov:generatesData this:Invoice ;
+                  gdprov:involvesAgent this:User ;
+                  gdprov:isPartOfProcess this:OrderProcess ;
+                  gdprov:usesData this:CustomerAddress ,
+                                  this:CustomerBankAC ,
+                                  this:CustomerCardDetails ,
+                                  this:CustomerContactNo ,
+                                  this:CustomerEmail ,
+                                  this:CustomerName ;
+                  gdprov:hasLegalBasis gdprtext:LegitimateInterest ;
+                  rdfs:comment ""@en ;
+                  rdfs:label "Order Product"@en .
+
+
+###  http://example.com/ontology/shoppingapp#Product
+this:Product rdf:type owl:NamedIndividual ,
+                      gdprov:Data ;
+             rdfs:comment ""@en ;
+             rdfs:label "Product"@en .
+
+
+###  http://example.com/ontology/shoppingapp#ProvideCopyOfPersonalData
+this:ProvideCopyOfPersonalData rdf:type owl:NamedIndividual ,
+                                        gdprov:ProvideCopyOfPersonalData ,
+                                        gdprov:UserOutputStep ;
+                               gdprov:generatesData this:CopyOfPersonalData ;
+                               gdprov:isPartOfProcess this:HandleRightDataPortability ;
+                               gdprov:usesData this:CustomerAddress ,
+                                               this:CustomerBankAC ,
+                                               this:CustomerCardDetails ,
+                                               this:CustomerContactNo ,
+                                               this:CustomerEmail ,
+                                               this:CustomerName ;
+                               rdfs:comment ""@en ;
+                               rdfs:label "Provide a copy of user's personal data"@en .
+
+
+###  http://example.com/ontology/shoppingapp#RectifyData
+this:RectifyData rdf:type owl:NamedIndividual ,
+                          gdprov:RectifyData ,
+                          gdprov:UserInputStep ;
+                 gdprov:isPartOfProcess this:HandleRightToRectification ;
+                 rdfs:comment ""@en ;
+                 rdfs:label "Rectify specified user data"@en .
+
+
+###  http://example.com/ontology/shoppingapp#RemoveUserAccountProcess
+this:RemoveUserAccountProcess rdf:type owl:NamedIndividual ,
+                                       gdprov:Process ;
+                              rdfs:comment ""@en ;
+                              rdfs:label "Remove user's account"@en .
+
+
+###  http://example.com/ontology/shoppingapp#ReportDataBreach
+this:ReportDataBreach rdf:type owl:NamedIndividual ,
+                               gdprov:ReportDataBreach ;
+                      gdprov:isPartOfProcess this:HandleDataBreach ;
+                      rdfs:comment ""@en ;
+                      rdfs:label "Report Data Breach"@en .
+
+
+###  http://example.com/ontology/shoppingapp#RequestAds
+this:RequestAds rdf:type owl:NamedIndividual ,
+                         gdprov:AutomatedStep ,
+                         gdprov:DataSharingStep ;
+                gdprov:generatesData this:Ads ;
+                gdprov:isPartOfProcess this:AdGenProcess ;
+                gdprov:hasLegalBasis gdprtext:GivenConsent ;
+                gdprov:sharesData this:CustomerAddress ,
+                                  this:CustomerContactNo ,
+                                  this:CustomerEmail ,
+                                  this:CustomerName ;
+                gdprov:sharesDataWith this:AdsProvider ;
+                rdfs:comment ""@en ;
+                rdfs:label "Request Ads from Provider"@en .
+
+
+###  http://example.com/ontology/shoppingapp#SARProvidePersonalData
+this:SARProvidePersonalData rdf:type owl:NamedIndividual ,
+                                     gdprov:DataUsageStep ,
+                                     gdprov:UserOutputStep ;
+                            gdprov:isPartOfProcess this:HandleSAR ;
+                            gdprov:usesData this:CustomerAddress ,
+                                            this:CustomerBankAC ,
+                                            this:CustomerCardDetails ,
+                                            this:CustomerContactNo ,
+                                            this:CustomerEmail ,
+                                            this:CustomerName ;
+                            gdprov:refersToProcess this:AdGenProcess ,
+                                                   this:MarketingProcess ,
+                                                   this:OrderProcess ;
+                            rdfs:comment ""@en ;
+                            rdfs:label "Provide user's data as part of SAR"@en .
+
+
+###  http://example.com/ontology/shoppingapp#StoreNewUserDetails
+this:StoreNewUserDetails rdf:type owl:NamedIndividual ,
+                                  gdprov:DataStorageStep ;
+                         gdprov:isPartOfProcess this:NewUserSignUpProcess ;
+                         gdprov:usesData this:CustomerAddress ,
+                                         this:CustomerContactNo ,
+                                         this:CustomerEmail ,
+                                         this:CustomerName ;
+                         p-plan:isPrecededBy this:GetNewUserDetails ;
+                         gdprov:hasLegalBasis gdprtext:GivenConsent ;
+                         rdfs:comment ""@en ;
+                         rdfs:label "Store new user's details"@en .
+
+
+###  http://example.com/ontology/shoppingapp#StoreUserConsent
+this:StoreUserConsent rdf:type owl:NamedIndividual ,
+                               gdprov:ConsentArchivalStep ;
+                      gdprov:archivesConsentAs this:StoredNewUserConsent ;
+                      gdprov:isPartOfProcess this:NewUserSignUpProcess ;
+                      gdprov:usesConsentAgreement this:NewUserConsent ;
+                      p-plan:isPrecededBy this:GetNewUserConsent ;
+                      gdprov:hasLegalBasis gdprtext:LegalObligation ;
+                      rdfs:comment ""@en ;
+                      rdfs:label "Store new user's consent"@en .
+
+
+###  http://example.com/ontology/shoppingapp#StoredNewUserConsent
+this:StoredNewUserConsent rdf:type owl:NamedIndividual ,
+                                   gdprov:GivenConsent ;
+                          rdfs:comment ""@en ;
+                          rdfs:label "Stored Consent"@en .
+
+
+###  http://example.com/ontology/shoppingapp#TermsAndConditions
+this:TermsAndConditions rdf:type owl:NamedIndividual ,
+                                 gdprov:TermsAndConditions ;
+                        rdfs:comment ""@en ;
+                        rdfs:label "Terms and Conditions"@en .
+
+
+###  http://example.com/ontology/shoppingapp#TransferDataToServers
+this:TransferDataToServers rdf:type owl:NamedIndividual ,
+                                    gdprov:AutomatedStep ,
+                                    gdprov:DataTransferStep ;
+                           gdprov:transfersDataToRegion this:BackupServers ;
+                           rdfs:comment ""@en ;
+                           rdfs:label "Transfer data to backup servers"@en .
+
+
+###  http://example.com/ontology/shoppingapp#User
+this:User rdf:type owl:NamedIndividual ,
+                   this:ServiceUser ;
+          rdfs:comment ""@en ;
+          rdfs:label "User"@en .
+
+
+###  http://example.com/ontology/shoppingapp#UserChoiceForErasure
+this:UserChoiceForErasure rdf:type owl:NamedIndividual ,
+                                   gdprov:UserInputStep ;
+                          gdprov:isPartOfProcess this:HandleRightOfErasure ;
+                          rdfs:comment ""@en ;
+                          rdfs:label "Get data to be erased"@en .
+
+
+###  http://example.com/ontology/shoppingapp#UserChoiceForProcessing
+this:UserChoiceForProcessing rdf:type owl:NamedIndividual ,
+                                      gdprov:UserInputStep ;
+                             gdprov:isPartOfProcess this:HandleRightToObjectProcessing ;
+                             rdfs:comment ""@en ;
+                             rdfs:label "Get processes to be halted"@en .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

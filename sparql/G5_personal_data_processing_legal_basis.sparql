@@ -1,0 +1,10 @@
+SELECT DISTINCT ?process ?legal where {
+  ?data a ?data_type .
+  ?data_type rdfs:subClassOf gdprov:PersonalData .
+  ?step a ?step_type .
+  ?step_type rdfs:subClassOf gdprov:DataStep .
+  ?step gdprov:usesData ?data . 
+  ?step gdprov:isPartOfProcess ?process .
+  OPTIONAL { ?step gdprov:hasLegalBasis ?legal } .
+  OPTIONAL {?process gdprov:hasLegalBasis ?legal . } .
+} ORDER BY ?process

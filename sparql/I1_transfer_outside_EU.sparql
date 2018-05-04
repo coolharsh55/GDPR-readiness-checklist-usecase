@@ -1,0 +1,7 @@
+SELECT DISTINCT ?step ?region ?location where {
+  ?step a gdprov:DataTransferStep .
+  OPTIONAL {
+    ?step gdprov:transfersDataToRegion ?region .
+    ?region this:location ?location .
+  }
+} ORDER BY ?step ?region

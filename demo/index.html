@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+        <link href='https://codemirror.net/lib/codemirror.css' rel='stylesheet' type='text/css'/>
+        <link href='https://codemirror.net/theme/solarized.css' rel='stylesheet' type='text/css'/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://codemirror.net/lib/codemirror.js"></script>
+        <script src='https://codemirror.net/mode/sparql/sparql.js'></script>
+        <script src='https://codemirror.net/addon/runmode/runmode.js'></script>
+        <script src='https://codemirror.net/addon/runmode/colorize.js'></script>
+        <link href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)' rel='stylesheet' type='text/css'/>
+        <script src='http://cdn.jsdelivr.net/yasr/2.4/yasr.bundled.min.js'></script>
+        <script src='http://cdn.jsdelivr.net/yasqe/2.2/yasqe.bundled.min.js'></script>
+        <script type="text/javascript" src="query.js"></script>
+        <style type="text/css">
+        .NA {
+            background-color: rgba(255,0,0,0.5);
+            padding-left: 10px;
+        }
+        </style>
+        <title>GDPR Readiness-Checklist SPARQL demo</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Queryable Provenance Metadata For GDPR Compliance</h1>
+        <p>GDPR Readiness-Checklist SPARQL demo</p>
+        <p>
+Information associated with regulatory compliance is often siloed as legal documentation that is not suitable for querying or reuse. Utilising open standards and technologies to represent and query this information can facilitate interoperability between stakeholders and assist in the task of maintaining as well as demonstrating compliance. We show how semantic web technologies can assist in representation and querying of compliance information related to the General Data Protection Regulation (GDPR), an European law governing the use of consent and personal data. We focus on the subset of obligations related to the use of consent and personal data, and represent the associated metadata using the <a href="http://openscience.adaptcentre.ie/projects/CDMM/GDPRov/">GDPRov</a> ontology and <a href="http://openscience.adaptcentre.ie/projects/GDPRtEXT/">GDPRtEXT</a> resource. This is a proof-of-concept demonstration where information is queried to automatically populate the <a href="http://gdprandyou.ie/wp-content/uploads/2018/01/GDPR-Checklist-Templates-for-SMEs-Downloadable-1.docx">GDPR-readiness checklist</a> published by Ireland’s Data Protection Commissioner (<a href="http://gdprandyou.ie/">gdprandyou.ie</a>).
+</p>
+<ul>
+<li>All queries are made to our <a href="http://openscience.adaptcentre.ie/sparql">SPARQL endpoint</a></li>
+<li>The queries are executed on page load and retrieve the results directly from the SPARQL endpoint / triple-store.</li>
+<li>Therefore, depending on your connection, the page may load slower than intended.</li>
+<li>The analysis notes describing the creation of this resource and queries can be accessed <a href="notes.html">HERE</a></li>
+</ul>
+
+<label>prefixes</label>
+<pre data-lang="sparql">
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
+PREFIX gdprov: &lt;http://purl.org/adaptcentre/openscience/ontologies/gdprov#&gt;
+PREFIX gdprtext: &lt;http://purl.org/adaptcentre/openscience/ontologies/GDPRtEXT#&gt;
+PREFIX p-plan: &lt;http://purl.org/net/p-plan#&gt;
+PREFIX prov: &lt;http://www.w3.org/ns/prov#&lt;
+PREFIX this: &lt;http://example.com/ontology/shoppingapp#&gt;
+</pre>        
+<hr/>
+        <section class="section" id="section1">
+            <h2>1. General Section</h2>
+            <h3>Categories of Personal Data and Data Subjects</h3>
+            <p>List the categories of data subjects and personal data collected and retained e.g. current employee data; retired employee data; customer data (sales information); marketing database; CCTV footage.
+            </p>
+
+<!-- G1 a -->
+<label>G1a. Categories of Personal Data</label>
+<pre id='code-G1a' data-lang="sparql" class="code-area">
+SELECT DISTINCT ?category where {
+  ?category rdfs:subClassOf gdprov:PersonalData .
+    FILTER(regex(str(?category), &quot;http://example.com/ontology/shoppingapp#&quot;)) .
+} ORDER BY ?category
+</pre>                
+<div id="results-G1a"></div>
+<br/><br/>
+<!-- G1 b -->
+<label>G1b. Categories of Data Subjects</label>
+<pre id="code-G1b" data-lang="sparql" class="code-area">
+SELECT DISTINCT ?category where {
+  ?category rdfs:subClassOf gdprov:DataSubject .
+  FILTER(regex(str(?category), &quot;http://example.com/ontology/shoppingapp#&quot;)) .
+} ORDER BY ?category
+</pre>
+<div id="results-G1b"></div>
+<hr/>
+
+<!-- G2 -->
+<h3>Elements of personal data included within each data category</h3>
+<p>List each type of personal data included within each category of personal data e.g. name, address, banking details, purchasing history, online browsing history, video and images.</p>
+<p><label>G2. Types of Personal Data</label></p>
+<pre id="code-G2" data-lang="sparql" class="code-area">
+SELECT DISTINCT ?data ?type where {
+  ?data a ?type .
+  ?type rdfs:subClassOf gdprov:PersonalData .
+  FILTER(regex(str(?data), &quot;http://example.com/ontology/shoppingapp#&quot;)) .
+} ORDER BY ?data ?type
+</pre>
+<div id="results-G2"></div>
+<hr/>
+
+<!-- G3 -->
+<h3>Source of the personal data</h3>
+<p>List the source(s) of the personal data e.g. collected directly from individuals; from third parties (if third party identify the data controller as this information will be necessary to meet obligations under Article 14).</p>
+<p><label>G3. data sources</label></p>
+<pre id="code-G3" data-lang="sparql">
+SELECT DISTINCT ?data ?step ?agent ?agent_type where {
+  ?data a ?data_type .
+  ?data_type rdfs:subClassOf gdprov:PersonalData .
+  ?step a gdprov:DataCollectionStep .
+  ?step gdprov:collectsData ?data .
+  ?step gdprov:collectsDataFromAgent ?agent .
+  ?agent a ?agent_type .
+  FILTER(regex(str(?agent_type), &quot;http://example.com/ontology/shoppingapp#&quot;)) .
+} ORDER BY ?data ?step ?agent
+</pre>
+<div id="results-G3"></div>
+<hr/>
+
+<!-- G4 -->
+<h3>Purposes for which personal data is processed</h3>
+<p>Within each category of personal data list the purposes for the data is collected and retained e.g. marketing, service enhancement, research, product development, systems integrity, HR matters, advertising.</p>
+<p><label>G4. purposes of processing</label></p>
+<pre id="code-G4" data-lang="sparql">
+SELECT DISTINCT ?data_type ?process where {
+  ?data a ?data_type .
+  ?data_type rdfs:subClassOf+ gdprov:PersonalData .
+  ?step a ?step_type .
+  ?step_type rdfs:subClassOf* gdprov:DataStep .
+  ?step gdprov:usesData ?data . 
+  ?step gdprov:isPartOfProcess ?process .
+} ORDER BY ?data_type ?process
+</pre>
+<div id="results-G4"></div>
+
+        
+<hr/>
+<!-- G5 -->
+<h3>Legal basis for each processing purpose (non-special categories of personal data)</h3>
+<p>For each purpose that personal data is processed, list the legal basis on which it is based e.g. consent, contract, legal obligation (Article 6).</p>
+<p><label>G5. legal basis for processing</label></p>
+<pre id="code-G5" data-lang="sparql">
+SELECT DISTINCT ?process ?legal where {
+  ?data a ?data_type .
+  ?data_type rdfs:subClassOf gdprov:PersonalData .
+  ?step a ?step_type .
+  ?step_type rdfs:subClassOf gdprov:DataStep .
+  ?step gdprov:usesData ?data . 
+  ?step gdprov:isPartOfProcess ?process .
+  OPTIONAL { ?step gdprov:hasLegalBasis ?legal } .
+  OPTIONAL {?process gdprov:hasLegalBasis ?legal . } .
+} ORDER BY ?process
+</pre>
+<div id="results-G5"></div>
+<hr/>
+<!-- G6 -->
+<h3>Special categories of personal data</h3>
+<p>If special categories of personal data are collected and retained, set out details of the nature of the data e.g. health, genetic, biometric data.</p>
+<p><label>G6. special data</label></p>
+<pre id="code-G6" data-lang="sparql">
+SELECT DISTINCT ?data ?SensitiveDataType ?collectionStep ?retained where {
+  ?SensitiveDataType rdfs:subClassOf gdprov:SensitiveData .
+  ?data a ?SensitiveDataType . 
+  ?collectionStep a gdprov:DataCollectionStep .
+  ?collectionStep gdprov:collectsData ?data .
+  BIND( EXISTS {
+    ?storageStep a gdprov:DataStorageStep .
+    ?storageStep gdprov:usesData ?data .
+  } as ?retained ) .
+} ORDER BY ?SensitiveDataType ?retained
+</pre>
+<div id="results-G6"></div>
+<hr/>
+<!-- G7 -->
+<h3>Legal basis for processing special categories of personal data</h3>
+<p>List the legal basis on which special categories of personal data are collected and retained e.g. explicit consent, legislative basis (Article 9).</p>
+<p><label>G7. legal basis for special data processing</label></p>
+<pre id="code-G7" data-lang="sparql">
+SELECT DISTINCT ?data ?SensitiveDataType ?collectionStep ?retained ?legal WHERE {
+  ?SensitiveDataType rdfs:subClassOf gdprov:SensitiveData .
+  ?data a ?SensitiveDataType . 
+  ?collectionStep a gdprov:DataCollectionStep .
+  ?collectionStep gdprov:collectsData ?data .
+  OPTIONAL {
+    ?collectionStep gdprov:hasLegalBasis ?legal .
+  }
+  BIND( EXISTS {
+    ?storageStep a gdprov:DataStorageStep .
+    ?storageStep gdprov:usesData ?data .
+  } as ?retained ) .
+  OPTIONAL {
+    ?collectionStep gdprov:isPartOfProcess ?process .
+  }
+} ORDER BY ?SensitiveDataType
+</pre>
+<div id="results-G7"></div>
+
+<hr/>
+<!-- G8 -->
+<h3>Retention period</h3>
+<p>For each category of personal data, list the period for which the data will be retained e.g. one month? one year?
+As a general rule data must be retained for no longer than is necessary for the purpose for which it was collected in the first place.</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- G9 -->
+<h3>Action required to be GDPR compliant?</h3>
+<p>Identify actions that are required to ensure all personal data processing operations are GDPR compliant e.g. this may include deleting data where there is no further purpose for retention.</p>
+<p><label class="NA"></label></p>
+<hr/>
+
+</section>
+<section>
+    <h2>2. Personal Data</h2>
+<!-- P1 -->
+<h3>Validity of Consent</h3>
+<p>Have you reviewed your organisation’s mechanisms for collecting consent to ensure that it is freely given, specific, informed and that it is a clear indication that an individual has chosen to agree to the processing of their data by way of statement or a clear affirmative action?</p>
+<p><label>P1. consent collection</label></p>
+<pre id="code-P1" data-lang="sparql">
+SELECT DISTINCT ?step ?terms ?template ?givenConsent {
+  ?step a gdprov:ConsentAcquisitionStep .
+  ?template a gdprov:ConsentAgreementTemplate .
+  ?terms a gdprov:TermsAndConditions .
+  ?givenConsent a gdprov:ConsentAgreement .
+  ?step gdprov:usesConsentAgreementTemplate ?template .
+  ?step gdprov:usesTermsAndConditions ?terms .
+  ?step gdprov:generatesConsentAgreement ?givenConsent .
+} ORDER BY ?step
+</pre>
+<div id="results-P1"></div>
+<hr/>
+<!-- P2 -->
+<h3>Retrospective Consent</h3>
+<p>If personal data that you currently hold on the basis of consent does not meet the required standard under the GDPR, have you re-sought the individual’s consent to ensure compliance with the GDPR?</p>
+<p><label class="NA"></label></p>
+
+<hr/>
+<!-- P3 -->
+<h3>Demonstration of Consent</h3>
+<p>Are procedures in place to demonstrate that an individual has consented to their data being processed?</p>
+<p><label>P3. show consent</label></p>
+<pre id="code-P3" data-lang="sparql">
+SELECT DISTINCT ?step ?action ?consent where {
+  ?consent a gdprov:ConsentAgreement .
+  ?StepType rdfs:subClassOf gdprov:ConsentStep .
+  ?step a ?StepType .
+  ?step ?action ?consent.
+  FILTER(regex(str(?action), &quot;http://purl.org/adaptcentre/openscience/ontologies/gdprov#&quot;)) .
+} ORDER BY ?step ?consent
+</pre>
+<div id="results-P3"></div>
+
+<hr/>
+<!-- P4 -->
+<h3>Withdraw consent for processing</h3>
+<p>Are procedures in place to allow an individual to withdraw their consent to the processing of their personal data?</p>
+<p><label>P4. withdraw consent</label></p>
+<pre id="code-P4" data-lang="sparql">
+SELECT DISTINCT ?step ?process ?action ?item where {
+  ?step a gdprov:ConsentWithdrawalStep .
+  OPTIONAL {
+    ?process a gdprov:Process .
+    ?step gdprov:isPartOfProcess ?process .
+  }
+  OPTIONAL {
+    ?step ?action ?item .
+  }
+  FILTER(regex(str(?action), &quot;http://purl.org/adaptcentre/openscience/ontologies/gdprov#&quot;)) .
+} ORDER BY ?step ?action
+</pre>
+<div id="results-P4"></div>
+
+<hr/>
+<!-- P5 -->
+<h3>Children's Personal Data</h3>
+<p>Where online services are provided to a child, are procedures in place to verify age and get consent of a parent/ legal guardian, where required?</p>
+<p><label>P5. age verification</label></p>
+<pre id="code-P5" data-lang="sparql">
+SELECT DISTINCT ?step ?StepType where {
+  ?StepType rdfs:subClassOf gdprov:ConsentAgeVerificationStep .
+  ?step a ?StepType .
+} ORDER BY ?step
+</pre>
+<div id="results-P5"></div>
+
+<hr/>
+<!-- P6 -->
+<h3>Legitimate interest based data processing</h3>
+<p>If legitimate interest is a legal basis on which personal data is processed, has an appropriate analysis been carried out to ensure that the use of this legal basis is appropriate? That analysis must demonstrate that 1) there is a valid legitimate interest, 2) the data processing is strictly necessary in pursuit of the legitimate interest, and 3) the processing is not prejudicial to or overridden by the rights of the individual.  </p>
+<p><label>P6. legitimate interest for processing</label></p>
+<pre id="code-P6" data-lang="sparql">
+SELECT DISTINCT ?step ?process ?action ?item where {
+  ?data a ?data_type .
+  ?data_type rdfs:subClassOf gdprov:PersonalData .
+  ?step a ?step_type .
+  ?step_type rdfs:subClassOf gdprov:DataStep .
+  ?step gdprov:usesData ?data . 
+  ?step gdprov:isPartOfProcess ?process .
+  ?step ?action ?item .
+  ?step gdprov:hasLegalBasis gdprtext:LegitimateInterest .
+  FILTER(regex(str(?action), &quot;http://purl.org/adaptcentre/openscience/ontologies/gdprov#&quot;)) .
+} ORDER BY ?process ?actions
+</pre>
+<div id="results-P6"></div>
+<hr/>
+</section>
+
+<section>
+    <h2>3. Data Subject Rights</h2>
+
+<!-- R1 -->
+<h3>Subject Access Requests (SARs)</h3>
+<p>Is there a documented policy/procedure for handling Subject Access Requests (SARs)?</p>
+<p><label>R1. SAR</label></p>
+<pre id="code-R1" data-lang="sparql">
+SELECT DISTINCT ?process where {
+  ?process a gdprov:HandleSAR .
+} ORDER BY ?process
+</pre>
+<div id="results-R1"></div>
+
+<hr/>
+<!-- R2 -->
+<h3>Subject Access Requests (SARs) Response Time</h3>
+<p>Is your organisation able to respond to SARs within one month?</p>
+<p><label class="NA"></label></p>
+
+<hr/>
+<!-- R3 -->
+<h3>Data Portability</h3>
+<p>Are procedures in place to provide individuals with their personal data in a structured, commonly used and machine readable format?</p>
+<p><label>R3. portable data format</label></p>
+<pre id="code-R3" data-lang="sparql">
+SELECT DISTINCT ?data ?format where {
+  ?process a gdprov:HandleRightOfDataPortability .
+  ?step gdprov:isPartOfProcess ?process .
+  ?step gdprov:generatesData ?data .
+  ?data dct:format ?format .
+} ORDER BY ?data
+</pre>
+<div id="results-R3"></div>
+
+<hr/>
+<!-- R4 -->
+<h3>Deletion and Rectification</h3>
+<p>Are there controls and procedures in place to allow personal data to be deleted or rectified (where applicable)?</p>
+<p><label>R4. data deletion</label></p>
+<pre id="code-R4" data-lang="sparql">
+SELECT DISTINCT ?process where {
+  {
+    ?process a gdprov:HandleRightOfErasure .
+  }
+  UNION
+  {
+    ?process a gdprov:HandleRightToRectification .
+  }
+} ORDER BY ?process
+</pre>
+<div id="results-R4"></div>
+
+<hr/>
+<!-- R5 -->
+<h3>Right to restriction of processing</h3>
+<p>Are there controls and procedures in place to halt the processing of personal data where an individual has on valid grounds sought the restriction of processing? </p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- R6 -->
+<h3>Right to object to processing</h3>
+<p>Are individuals told about their right to object to certain types of processing such as direct marketing or where the legal basis of the processing is legitimate interests or necessary for a task carried out in the public interest? </p>
+<p><label class="NA"></label></p>
+
+<hr/>
+<!-- R7 -->
+<h3>Halt processing after right to object</h3>
+<p>Are there controls and procedures in place to halt the processing of personal data where an individual has objected to the processing?</p>
+<p><label>R7. right to object</label></p>
+<pre id="code-R7" data-lang="sparql">
+SELECT DISTINCT ?process where {
+  ?process a gdprov:HandleRightToObjectProcessing .
+} ORDER BY ?process
+</pre>
+<div id="results-R7"></div>
+
+<hr/>
+<!-- R8 -->
+<h3>Profiling and automated processing</h3>
+<p>If automated decision making, which has a legal or significant similar affect for an individual, is based on consent, has explicit consent been collected? </p>
+<p><label>R8. automated processing</label></p>
+<pre id="code-R8" data-lang="sparql">
+SELECT DISTINCT ?step ?process where {
+  ?step a gdprov:AutomatedStep .
+  ?step gdprov:isPartOfProcess ?process .
+  ?process gdprov:hasLegalBasis gdprtext:GivenConsent .
+} ORDER BY ?step ?process
+</pre>
+<div id="results-R8"></div>
+
+<hr/>
+<!-- R9 -->
+<h3>Right to obtain human intervention</h3>
+<p>Where an automated decision is made which is necessary for entering into, or performance of, a contract, or based on the explicit consent of an individual, are procedures in place to facilitate an individual’s right to obtain human intervention and to contest the decision?</p>
+<p><label>R9. automated steps</label></p>
+<pre id="code-R9" data-lang="sparql">
+SELECT DISTINCT ?step ?process ?legal where {
+  ?step a gdprov:AutomatedStep .
+  ?step gdprov:isPartOfProcess ?process .
+  ?process gdprov:hasLegalBasis ?legal .
+  FILTER(?legal IN (gdprtext:ContractWithDataSubject, gdprtext:GivenConsent) ) .
+} ORDER BY ?step
+</pre>
+<div id="results-R9"></div>
+<hr/>
+<!-- R10 -->
+<h3>Restrictions to data subject rights</h3>
+<p>Have the circumstances been documented in which an individual’s data protection rights may be lawfully restricted? Note: the Irish Data Protection Bill will set out further details on the implementation of Article 23.</p>
+<p><label class="NA"></label></p>
+<hr/>
+</section>
+
+<h2>4. Accuracy and Retention</h2>
+
+<hr/>
+<!-- A1 -->
+<h3>Purpose Limitation</h3>
+<p>Is personal data only used for the purposes for which it was originally collected? </p>
+<p><label>A1. personal data purposes</label></p>
+<pre id="code-A1" data-lang="sparql">
+SELECT DISTINCT ?data ?process WHERE {
+  ?StepType rdfs:subClassOf gdprov:DataStep .
+  ?step a ?StepType .
+  ?DataType rdfs:subClassOf gdprov:PersonalData .
+  ?data a ?DataType .
+  ?step ?action ?data .
+  ?step gdprov:isPartOfProcess ?process
+} ORDER BY ?data ?process
+</pre>
+<div id="results-A1"></div>
+
+<hr/>
+<!-- A2 -->
+<h3>Data minimisation</h3>
+<p>Is the personal data collected limited to what is necessary for the purposes for which it is processed? </p>
+<p><label>A2. personal data collected</label></p>
+<pre id="code-A2" data-lang="sparql">
+SELECT DISTINCT ?data ?used where {
+  ?DataType rdfs:subClassOf gdprov:PersonalData .
+  ?data a ?DataType .
+  ?step a gdprov:DataUsageStep .
+  BIND(EXISTS { ?step gdprov:usesData ?data } as ?used) .
+} ORDER BY ?data
+</pre>
+<div id="results-A2"></div>
+<hr/>
+<!-- A3 -->
+<h3>Accuracy</h3>
+<p>Are procedures in place to ensure personal data is kept up to date and accurate and where a correction is required, the necessary changes are made without delay? </p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- A4 -->
+<h3>Retention</h3>
+<p>Are retention policies and procedures in place to ensure data is held for no longer than is necessary for the purposes for which it was collected? </p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- A5 -->
+<h3>Retention Legal Obligations</h3>
+<p>Is your business subject to other rules that require a minimum retention period (e.g. medical records/tax records)?</p>
+<p><label class="NA"></label></p>
+
+<hr/>
+<!-- A6 -->
+<h3>Destroy data securely</h3>
+<p>Do you have procedures in place to ensure data is destroyed securely, in accordance with your retention policies?</p>
+<p><label>A6. data deletion</label></p>
+<pre id="code-A6" data-lang="sparql">
+SELECT DISTINCT ?step ?action ?data where {
+  ?step a gdprov:DataDeletionStep .
+  ?DataType rdfs:subClassOf gdprov:PersonalData .
+  ?data a ?DataType .
+  ?step ?action ?data .
+} ORDER BY ?step ?action
+</pre>
+<div id="results-A6"></div>
+<hr/>
+<!-- A7 -->
+<h3>Duplication of records</h3>
+<p>Are procedures in place to ensure that there is no unnecessary or unregulated duplication of records?</p>
+<p><label class="NA"></label></p>
+<hr/>
+<hr/>
+</section>
+
+<section>
+    <h2>5. Transparency requirements</h2>
+<h3>Transparency to customers and employees</h3>
+<p>Are service users/employees fully informed of how you use their data in a concise, transparent, intelligible and easily accessible form using clear and plain language? </p>
+<p><label class="NA"></label></p>
+
+<hr/>
+<!-- T2 -->
+<h3>Provide Information listed in Article 13</h3>
+<p>Where personal data is collected directly from the individuals, are procedures in place to provide the information listed at Article 13 of the GDPR? </p>
+<p><label>T2. data collection</label></p>
+<pre id="code-T2" data-lang="sparql">
+SELECT DISTINCT ?step ?data where {
+  ?step a gdprov:DataCollectionStep .
+  ?step gdprov:collectsData ?data .
+} ORDER BY ?step
+</pre>
+<div id="results-T2"></div>
+
+<hr/>
+<!-- T3 -->
+<h3>Provide Information listed in Article 14</h3>
+<p>If personal data is not collected from the subject but from a third party (e.g. acquired as part of a merger) are procedures in place to provide the information listed at Article 14 of the GDPR? </p>
+<p><label>T3. third party collection</label></p>
+<pre id="code-T3" data-lang="sparql">
+SELECT DISTINCT ?agent ?thirdparty ?step  where {
+  ?step a gdprov:DataCollectionStep .
+  ?step gdprov:collectsDataFromAgent ?agent .
+  BIND(EXISTS { ?agent a gdprov:ThirdParty } as ?thirdparty ) .
+} ORDER BY ?agent ?step
+</pre>
+<div id="results-T3"></div>
+<hr/>
+<!-- T4 -->
+<h3>Provide information when engaging</h3>
+<p></p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- T5 -->
+<h3>Provide information on facilitating rights</h3>
+<p>Is information on how the organisation facilitates individuals exercising their GDPR rights published in an easily accessible and readable format?</p>
+<p><label class="NA"></label></p>
+<hr/>
+</section>
+<h2>6. Other Data Controller Obligations</h2>
+<!-- C1 -->
+<h3>Supplier Agreements</h3>
+<p>Have agreements with suppliers and other third parties processing personal data on your behalf been reviewed to ensure all appropriate data protection requirements are included?</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- C2 -->
+<h3>Data Protection Officers</h3>
+<p>Do you need to appoint a DPO as per Article 37 of the GDPR?</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- C3 -->
+<h3>Reasons for not having a DPO</h3>
+<p>If it is decided that a DPO is not required, have you documented the reasons why? </p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- C4 -->
+<h3>Escalation procedures</h3>
+<p>Where a DPO is appointed, are escalation and reporting lines in place? Are these procedures documented?</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- C5 -->
+<h3>Escalation procedures</h3>
+<p>"Have you published the contact details of your DPO to facilitate your customers/ employees in making contact with them?
+(Note: post 25 May 2018 you will also be required to notify your data protection authority of your DPO’s contact details)"</p>
+<p><label class="NA"></label></p>
+
+<hr/>
+<!-- C6 -->
+<h3>Data Protection Impact Assessments (DPIAs) </h3>
+<p>If your data processing is considered high risk, do you have a process for identifying the need for, and conducting of, DPIAs? Are these procedures documented?</p>
+<p><label>C6. DPIA</label></p>
+<pre id="code-C6" data-lang="sparql">
+SELECT DISTINCT ?process where {
+  ?process a gdprov:ImpactAssessment .
+} ORDER BY ?process
+</pre>
+<div id="results-C6"></div>
+<hr/>
+</section>
+<section>
+    <h2>7. Data Security</h2>
+
+<!-- S1 -->
+<h3>Risks involved in processing data</h3>
+<p>Have you assessed the risks involved in processing personal data and put measures in place to mitigate against them?</p>
+<p><label>S1. processing data</label></p>
+<pre id="code-S1" data-lang="sparql">
+SELECT DISTINCT ?data ?step where {
+  ?StepType rdfs:subClassOf gdprov:DataStep .
+  ?step a ?StepType .
+  ?DataType rdfs:subClassOf gdprov:PersonalData .
+  ?data a ?DataType .
+  ?step gdprov:usesData ?data .
+} ORDER BY ?data
+</pre>
+<div id="results-S1"></div>
+<hr/>
+<!-- S2 -->
+<h3>Documented Security Program</h3>
+<p>Is there a documented security programme that specifies the technical, administrative and physical safeguards for personal data?</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- S3 -->
+<h3>Resolving security related issues</h3>
+<p>Is there a documented process for resolving security related complaints and issues?</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- S4 -->
+<h3>Designated individual for security</h3>
+<p>Is there a designated individual who is responsible for preventing and investigating security breaches?</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- S5 -->
+<h3>Encryption</h3>
+<p>Are industry standard encryption technologies employed for transferring, storing, and receiving individuals' sensitive personal information?</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- S6 -->
+<h3>Removing information</h3>
+<p>Is personal information systematically destroyed, erased, or anonymised when it is no longer legally required to be retained.</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- S7 -->
+<h3>Restoring access</h3>
+<p>Can access to personal data be restored in a timely manner in the event of a physical or technical incident?</p>
+<p><label class="NA"></label></p>
+<hr/>
+</section>
+<section>
+    <h2>8. Data Breaches</h2>
+
+<!-- B1 -->
+<h3>Documented incident plans</h3>
+<p>Does the organisation have a documented privacy and security incident response plan?</p>
+<p><label>B1. data breach plan</label></p>
+<pre id="code-B1" data-lang="sparql">
+SELECT DISTINCT ?process ?step where {
+  ?process a ?BreachProcess .
+  FILTER(?BreachProcess IN (gdprov:HandleDataBreachProcess, gdprov:ReportDataBreach) ) .
+  ?step gdprov:isPartOfProcess ?process .
+} ORDER BY ?process
+</pre>
+<div id="results-B1"></div>
+<hr/>
+<!-- B2 -->
+<h3>Regular reviews</h3>
+<p>Are plans and procedures regularly reviewed?</p>
+<p><label class="NA"></label></p>
+
+<hr/>
+<!-- B3 -->
+<h3>Notifying authorities</h3>
+<p>Are there procedures in place to notify the office of the Data Protection Commissioner of a data breach?</p>
+<p><label>B3. notify DPC</label></p>
+<pre id="code-B3" data-lang="sparql">
+SELECT DISTINCT ?process where {
+  ?process a gdprov:ReportDataBreach .
+} ORDER BY ?process
+</pre>
+<div id="results-B3"></div>
+
+<hr/>
+<!-- B4 -->
+<h3>Notifying data subjects</h3>
+<p>Are there procedures in place to notify data subjects of a data breach (where applicable)?</p>
+<p><label>B4. notify Data Subjects</label></p>
+<pre id="code-B4" data-lang="sparql">
+SELECT DISTINCT ?process where {
+  ?process a gdprov:ReportDataBreach .
+} ORDER BY ?process
+</pre>
+<div id="results-B4"></div>
+<hr/>
+<!-- B5 -->
+<h3>Documentation of data breaches</h3>
+<p>Are all data breaches fully documented?</p>
+<p><label class="NA"></label></p>
+<hr/>
+<!-- B6 -->
+<h3>Co-operation procedures for data breach</h3>
+<p>Co-operation procedures for data breach</p>
+<p><label class="NA"></label></p>
+<hr/>
+</section>
+<section>
+    <h2>9. International Data Transfers (outside EEA)</h2>
+
+<!-- I1 -->
+<h3>Data transfer outside EEA</h3>
+<p>Is personal data transferred outside the EEA, e.g. to the US or other countries?</p>
+<p><label>I1. data transfer</label></p>
+<pre id="code-I1" data-lang="sparql">
+SELECT DISTINCT ?step ?region ?location where {
+  ?step a gdprov:DataTransferStep .
+  OPTIONAL {
+    ?step gdprov:transfersDataToRegion ?region .
+    ?region this:location ?location .
+  }
+} ORDER BY ?step ?region
+</pre>
+<div id="results-I1"></div>
+
+<hr/>
+<!-- I2 -->
+<h3>Special category of Personal Data in Transfer</h3>
+<p>Does this include any special categories of personal data?</p>
+<p><label>I2. transfer special data</label></p>
+<pre id="code-I2" data-lang="sparql">
+ASK {
+  ?step a gdprov:DataTransferStep .
+  ?step ?_ ?data .
+  ?data a ?DataType .
+  ?DataType rdfs:subClassOf gdprov:SensitiveData .
+}
+</pre>
+<div id="results-I2"></div>
+
+<hr/>
+<!-- I3 -->
+<h3>Purpose of Transfer</h3>
+<p>What is the purpose(s) of the transfer?</p>
+<p><label>I3. transfer purpose</label></p>
+<pre id="code-I3" data-lang="sparql">
+select DISTINCT ?step ?comment {
+  ?step a gdprov:DataTransferStep .
+  ?step rdfs:comment ?comment .
+} ORDER BY ?step
+</pre>
+<div id="results-I3"></div>
+
+<hr/>
+<!-- I4 -->
+<h3>Transfer Recipients</h3>
+<p>Who is the transfer to?</p>
+<p><label>I4. transfer agent</label></p>
+<pre id="code-I4" data-lang="sparql">
+SELECT DISTINCT ?step ?entity ?EntityType {
+  ?step a gdprov:DataTransferStep .
+  OPTIONAL {
+    ?step ?action ?entity .
+    ?entity a ?EntityType .
+    ?EntityType rdfs:subClassOf* prov:Agent .
+  }
+} ORDER BY ?step ?entity
+</pre>
+<div id="results-I4"></div>
+<hr/>
+        </section>
+        </div>
+    </body>
+</html>

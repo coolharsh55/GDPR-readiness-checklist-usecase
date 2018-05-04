@@ -1,0 +1,11 @@
+SELECT DISTINCT ?step ?process ?action ?item where {
+  ?data a ?data_type .
+  ?data_type rdfs:subClassOf gdprov:PersonalData .
+  ?step a ?step_type .
+  ?step_type rdfs:subClassOf gdprov:DataStep .
+  ?step gdprov:usesData ?data . 
+  ?step gdprov:isPartOfProcess ?process .
+  ?step ?action ?item .
+  ?step gdprov:hasLegalBasis gdprtext:LegitimateInterest .
+  FILTER(regex(str(?action), "http://purl.org/adaptcentre/openscience/ontologies/gdprov#")) .
+} ORDER BY ?process ?action

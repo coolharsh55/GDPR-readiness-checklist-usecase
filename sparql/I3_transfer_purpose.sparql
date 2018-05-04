@@ -1,0 +1,4 @@
+select DISTINCT ?step ?comment {
+  ?step a gdprov:DataTransferStep .
+  ?step rdfs:comment ?comment .
+} ORDER BY ?step

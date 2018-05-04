@@ -1,0 +1,6 @@
+SELECT DISTINCT ?data ?used where {
+  ?DataType rdfs:subClassOf gdprov:PersonalData .
+  ?data a ?DataType .
+  ?step a gdprov:DataUsageStep .
+  BIND(EXISTS { ?step gdprov:usesData ?data } as ?used) .
+} ORDER BY ?data
